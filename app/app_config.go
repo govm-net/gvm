@@ -54,8 +54,11 @@ import (
 	"google.golang.org/protobuf/types/known/durationpb"
 
 	gvmmodulev1 "github.com/govm-net/gvm/api/gvm/gvm/module"
+	shardmodulev1 "github.com/govm-net/gvm/api/gvm/shard/module"
 	_ "github.com/govm-net/gvm/x/gvm/module" // import for side-effects
 	gvmmoduletypes "github.com/govm-net/gvm/x/gvm/types"
+	_ "github.com/govm-net/gvm/x/shard/module" // import for side-effects
+	shardmoduletypes "github.com/govm-net/gvm/x/shard/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 )
 
@@ -95,6 +98,7 @@ var (
 		circuittypes.ModuleName,
 		// chain modules
 		gvmmoduletypes.ModuleName,
+		shardmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
 
@@ -120,6 +124,7 @@ var (
 		ibcfeetypes.ModuleName,
 		// chain modules
 		gvmmoduletypes.ModuleName,
+		shardmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	}
 
@@ -139,6 +144,7 @@ var (
 		ibcfeetypes.ModuleName,
 		// chain modules
 		gvmmoduletypes.ModuleName,
+		shardmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	}
 
@@ -159,6 +165,7 @@ var (
 		{Account: ibctransfertypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner}},
 		{Account: ibcfeetypes.ModuleName},
 		{Account: icatypes.ModuleName},
+		{Account: shardmoduletypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner, authtypes.Staking}},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 
@@ -297,6 +304,10 @@ var (
 			{
 				Name:   gvmmoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&gvmmodulev1.Module{}),
+			},
+			{
+				Name:   shardmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&shardmodulev1.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},

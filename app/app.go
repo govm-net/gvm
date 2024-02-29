@@ -76,6 +76,8 @@ import (
 	ibckeeper "github.com/cosmos/ibc-go/v8/modules/core/keeper"
 
 	gvmmodulekeeper "github.com/govm-net/gvm/x/gvm/keeper"
+	shardmodulekeeper "github.com/govm-net/gvm/x/shard/keeper"
+
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	"github.com/govm-net/gvm/docs"
@@ -140,7 +142,8 @@ type App struct {
 	ScopedICAControllerKeeper capabilitykeeper.ScopedKeeper
 	ScopedICAHostKeeper       capabilitykeeper.ScopedKeeper
 
-	GvmKeeper gvmmodulekeeper.Keeper
+	GvmKeeper   gvmmodulekeeper.Keeper
+	ShardKeeper shardmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -280,6 +283,7 @@ func New(
 		&app.GroupKeeper,
 		&app.CircuitBreakerKeeper,
 		&app.GvmKeeper,
+		&app.ShardKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	); err != nil {
 		panic(err)

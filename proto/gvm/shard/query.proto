@@ -1,0 +1,143 @@
+syntax = "proto3";
+
+package gvm.shard;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "gvm/shard/params.proto";
+import "gvm/shard/shard.proto";
+import "gvm/shard/to_parent.proto";
+import "gvm/shard/to_left_child.proto";
+import "gvm/shard/to_right_child.proto";
+
+option go_package = "github.com/govm-net/gvm/x/shard/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  
+  // Parameters queries the parameters of the module.
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/govm-net/gvm/shard/params";
+  
+  }
+  
+  // Queries a list of Shard items.
+  rpc Shard    (QueryGetShardRequest) returns (QueryGetShardResponse) {
+    option (google.api.http).get = "/govm-net/gvm/shard/shard/{index}";
+  
+  }
+  rpc ShardAll (QueryAllShardRequest) returns (QueryAllShardResponse) {
+    option (google.api.http).get = "/govm-net/gvm/shard/shard";
+  
+  }
+  
+  // Queries a list of ToParent items.
+  rpc ToParent    (QueryGetToParentRequest) returns (QueryGetToParentResponse) {
+    option (google.api.http).get = "/govm-net/gvm/shard/to_parent/{id}";
+  
+  }
+  rpc ToParentAll (QueryAllToParentRequest) returns (QueryAllToParentResponse) {
+    option (google.api.http).get = "/govm-net/gvm/shard/to_parent";
+  
+  }
+  
+  // Queries a list of ToLeftChild items.
+  rpc ToLeftChild    (QueryGetToLeftChildRequest) returns (QueryGetToLeftChildResponse) {
+    option (google.api.http).get = "/govm-net/gvm/shard/to_left_child/{id}";
+  
+  }
+  rpc ToLeftChildAll (QueryAllToLeftChildRequest) returns (QueryAllToLeftChildResponse) {
+    option (google.api.http).get = "/govm-net/gvm/shard/to_left_child";
+  
+  }
+  
+  // Queries a list of ToRightChild items.
+  rpc ToRightChild    (QueryGetToRightChildRequest) returns (QueryGetToRightChildResponse) {
+    option (google.api.http).get = "/govm-net/gvm/shard/to_right_child/{id}";
+  
+  }
+  rpc ToRightChildAll (QueryAllToRightChildRequest) returns (QueryAllToRightChildResponse) {
+    option (google.api.http).get = "/govm-net/gvm/shard/to_right_child";
+  
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+message QueryGetShardRequest {
+  uint64 index = 1;
+}
+
+message QueryGetShardResponse {
+  Shard shard = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllShardRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllShardResponse {
+  repeated Shard                                  shard      = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetToParentRequest {
+  uint64 id = 1;
+}
+
+message QueryGetToParentResponse {
+  ToParent ToParent = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllToParentRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllToParentResponse {
+  repeated ToParent                               ToParent   = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetToLeftChildRequest {
+  uint64 id = 1;
+}
+
+message QueryGetToLeftChildResponse {
+  ToLeftChild ToLeftChild = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllToLeftChildRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllToLeftChildResponse {
+  repeated ToLeftChild                            ToLeftChild = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination  = 2;
+}
+
+message QueryGetToRightChildRequest {
+  uint64 id = 1;
+}
+
+message QueryGetToRightChildResponse {
+  ToRightChild ToRightChild = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllToRightChildRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllToRightChildResponse {
+  repeated ToRightChild                           ToRightChild = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination   = 2;
+}
+

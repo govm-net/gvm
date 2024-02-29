@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package gvm.shard;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "gvm/shard/params.proto";
+import "gvm/shard/shard.proto";
+import "gvm/shard/to_parent.proto";
+import "gvm/shard/to_left_child.proto";
+import "gvm/shard/to_right_child.proto";
+
+option go_package = "github.com/govm-net/gvm/x/shard/types";
+
+// GenesisState defines the shard module's genesis state.
+message GenesisState {
+  
+  // params defines all the parameters of the module.
+           Params       params            = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+

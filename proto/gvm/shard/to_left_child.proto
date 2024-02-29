@@ -1,0 +1,14 @@
+syntax = "proto3";
+package gvm.shard;
+
+option go_package = "github.com/govm-net/gvm/x/shard/types";
+import "gogoproto/gogo.proto"; 
+import "cosmos/base/v1beta1/coin.proto"; 
+
+message ToLeftChild {
+  uint64 id = 1;
+  string sender = 2; 
+  cosmos.base.v1beta1.Coin amount = 3 [(gogoproto.nullable) = false]; 
+  string info = 4; 
+  
+}

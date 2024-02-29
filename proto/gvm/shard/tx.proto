@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package gvm.shard;
+
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "gvm/shard/params.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+option go_package = "github.com/govm-net/gvm/x/shard/types";
+
+// Msg defines the Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+  
+  // UpdateParams defines a (governance) operation for updating the module
+  // parameters. The authority defaults to the x/gov module account.
+  rpc UpdateParams (MsgUpdateParams) returns (MsgUpdateParamsResponse);
+  rpc CreateShard  (MsgCreateShard ) returns (MsgCreateShardResponse );
+  rpc SendToShard  (MsgSendToShard ) returns (MsgSendToShardResponse );
+}
+// MsgUpdateParams is the Msg/UpdateParams request type.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) =                   "authority";
+  option           (amino.name) = "gvm/x/shard/MsgUpdateParams";
+  
+  // authority is the address that controls the module (defaults to x/gov unless overwritten).
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // params defines the module parameters to update.
+  
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+message MsgUpdateParamsResponse {}
+
+message MsgCreateShard {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+  uint64 index   = 2;
+}
+
+message MsgCreateShardResponse {}
+
+message MsgSendToShard {
+  option (cosmos.msg.v1.signer) = "creator";
+  string                   creator   = 1;
+  uint64                   direction = 2;
+  cosmos.base.v1beta1.Coin amount    = 3 [(gogoproto.nullable) = false];
+  string                   info      = 4;
+}
+
+message MsgSendToShardResponse {}
+

@@ -1,0 +1,12 @@
+syntax = "proto3";
+package gvm.shard;
+
+option go_package = "github.com/govm-net/gvm/x/shard/types";
+
+message Shard {
+  uint64 index = 1; 
+  string creator = 2; 
+  uint64 startTime = 3; 
+  
+}
+
