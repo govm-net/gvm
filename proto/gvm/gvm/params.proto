@@ -1,0 +1,15 @@
+syntax = "proto3";
+package gvm.gvm;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/govm-net/gvm/x/gvm/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "gvm/x/gvm/Params";
+  option (gogoproto.equal) = true;
+
+  
+}
