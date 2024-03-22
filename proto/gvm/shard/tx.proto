@@ -55,5 +55,7 @@ message MsgSendToShard {
   string                   info      = 4;
 }
 
-message MsgSendToShardResponse {}
+message MsgSendToShardResponse {
+  uint64 id = 1;
+}
 

@@ -1,0 +1,14 @@
+syntax = "proto3";
+package gvm.gvm;
+
+option go_package = "github.com/govm-net/gvm/x/gvm/types";
+
+message ShardBlock {
+  uint64 index = 1; 
+  string parent = 2; 
+  string leftChild = 3; 
+  string rightChild = 4; 
+  string vdf = 5; 
+  
+}
+

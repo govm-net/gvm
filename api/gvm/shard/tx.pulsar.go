@@ -2308,12 +2308,14 @@ func (x *fastReflection_MsgSendToShard) ProtoMethods() *protoiface.Methods {
 }
 
 var (
-	md_MsgSendToShardResponse protoreflect.MessageDescriptor
+	md_MsgSendToShardResponse    protoreflect.MessageDescriptor
+	fd_MsgSendToShardResponse_id protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_gvm_shard_tx_proto_init()
 	md_MsgSendToShardResponse = File_gvm_shard_tx_proto.Messages().ByName("MsgSendToShardResponse")
+	fd_MsgSendToShardResponse_id = md_MsgSendToShardResponse.Fields().ByName("id")
 }
 
 var _ protoreflect.Message = (*fastReflection_MsgSendToShardResponse)(nil)
@@ -2381,6 +2383,12 @@ func (x *fastReflection_MsgSendToShardResponse) Interface() protoreflect.ProtoMe
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
 func (x *fastReflection_MsgSendToShardResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.Id != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.Id)
+		if !f(fd_MsgSendToShardResponse_id, value) {
+			return
+		}
+	}
 }
 
 // Has reports whether a field is populated.
@@ -2396,6 +2404,8 @@ func (x *fastReflection_MsgSendToShardResponse) Range(f func(protoreflect.FieldD
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_MsgSendToShardResponse) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
+	case "gvm.shard.MsgSendToShardResponse.id":
+		return x.Id != uint64(0)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: gvm.shard.MsgSendToShardResponse"))
@@ -2412,6 +2422,8 @@ func (x *fastReflection_MsgSendToShardResponse) Has(fd protoreflect.FieldDescrip
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgSendToShardResponse) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
+	case "gvm.shard.MsgSendToShardResponse.id":
+		x.Id = uint64(0)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: gvm.shard.MsgSendToShardResponse"))
@@ -2428,6 +2440,9 @@ func (x *fastReflection_MsgSendToShardResponse) Clear(fd protoreflect.FieldDescr
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_MsgSendToShardResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
+	case "gvm.shard.MsgSendToShardResponse.id":
+		value := x.Id
+		return protoreflect.ValueOfUint64(value)
 	default:
 		if descriptor.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: gvm.shard.MsgSendToShardResponse"))
@@ -2448,6 +2463,8 @@ func (x *fastReflection_MsgSendToShardResponse) Get(descriptor protoreflect.Fiel
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgSendToShardResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
+	case "gvm.shard.MsgSendToShardResponse.id":
+		x.Id = value.Uint()
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: gvm.shard.MsgSendToShardResponse"))
@@ -2468,6 +2485,8 @@ func (x *fastReflection_MsgSendToShardResponse) Set(fd protoreflect.FieldDescrip
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_MsgSendToShardResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
+	case "gvm.shard.MsgSendToShardResponse.id":
+		panic(fmt.Errorf("field id of message gvm.shard.MsgSendToShardResponse is not mutable"))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: gvm.shard.MsgSendToShardResponse"))
@@ -2481,6 +2500,8 @@ func (x *fastReflection_MsgSendToShardResponse) Mutable(fd protoreflect.FieldDes
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_MsgSendToShardResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
+	case "gvm.shard.MsgSendToShardResponse.id":
+		return protoreflect.ValueOfUint64(uint64(0))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: gvm.shard.MsgSendToShardResponse"))
@@ -2550,6 +2571,9 @@ func (x *fastReflection_MsgSendToShardResponse) ProtoMethods() *protoiface.Metho
 		var n int
 		var l int
 		_ = l
+		if x.Id != 0 {
+			n += 1 + runtime.Sov(uint64(x.Id))
+		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
 		}
@@ -2578,6 +2602,11 @@ func (x *fastReflection_MsgSendToShardResponse) ProtoMethods() *protoiface.Metho
 		if x.unknownFields != nil {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.Id != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.Id))
+			i--
+			dAtA[i] = 0x8
 		}
 		if input.Buf != nil {
 			input.Buf = append(input.Buf, dAtA...)
@@ -2628,6 +2657,25 @@ func (x *fastReflection_MsgSendToShardResponse) ProtoMethods() *protoiface.Metho
 				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: MsgSendToShardResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 			}
 			switch fieldNum {
+			case 1:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+				}
+				x.Id = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.Id |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
 			default:
 				iNdEx = preIndex
 				skippy, err := runtime.Skip(dAtA[iNdEx:])
@@ -2882,6 +2930,8 @@ type MsgSendToShardResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
+
+	Id uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 }
 
 func (x *MsgSendToShardResponse) Reset() {
@@ -2902,6 +2952,13 @@ func (*MsgSendToShardResponse) ProtoMessage() {}
 // Deprecated: Use MsgSendToShardResponse.ProtoReflect.Descriptor instead.
 func (*MsgSendToShardResponse) Descriptor() ([]byte, []int) {
 	return file_gvm_shard_tx_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *MsgSendToShardResponse) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
 }
 
 var File_gvm_shard_tx_proto protoreflect.FileDescriptor
@@ -2948,8 +3005,9 @@ var file_gvm_shard_tx_proto_rawDesc = []byte{
 	0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12,
 	0x12, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x69,
 	0x6e, 0x66, 0x6f, 0x3a, 0x0c, 0x82, 0xe7, 0xb0, 0x2a, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f,
-	0x72, 0x22, 0x18, 0x0a, 0x16, 0x4d, 0x73, 0x67, 0x53, 0x65, 0x6e, 0x64, 0x54, 0x6f, 0x53, 0x68,
-	0x61, 0x72, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0xf6, 0x01, 0x0a, 0x03,
+	0x72, 0x22, 0x28, 0x0a, 0x16, 0x4d, 0x73, 0x67, 0x53, 0x65, 0x6e, 0x64, 0x54, 0x6f, 0x53, 0x68,
+	0x61, 0x72, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x02, 0x69, 0x64, 0x32, 0xf6, 0x01, 0x0a, 0x03,
 	0x4d, 0x73, 0x67, 0x12, 0x4e, 0x0a, 0x0c, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72,
 	0x61, 0x6d, 0x73, 0x12, 0x1a, 0x2e, 0x67, 0x76, 0x6d, 0x2e, 0x73, 0x68, 0x61, 0x72, 0x64, 0x2e,
 	0x4d, 0x73, 0x67, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x1a,

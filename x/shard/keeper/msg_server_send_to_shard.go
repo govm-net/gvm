@@ -10,8 +10,24 @@ import (
 func (k msgServer) SendToShard(goCtx context.Context, msg *types.MsgSendToShard) (*types.MsgSendToShardResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: Handling the message
-	_ = ctx
+	err := k.bankKeeper.SendCoinsFromAccountToModule(ctx, sdk.AccAddress(msg.Creator), types.ModuleName, sdk.Coins{msg.Amount})
+	if err != nil {
+		return nil, err
+	}
+	err = k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.Coins{msg.Amount})
+	if err != nil {
+		return nil, err
+	}
 
-	return &types.MsgSendToShardResponse{}, nil
+	var toLeftChild = types.ToLeftChild{
+		Sender: msg.Creator,
+		Amount: msg.Amount,
+		Info:   msg.Info,
+	}
+	id := k.AppendToLeftChild(
+		ctx,
+		toLeftChild,
+	)
+
+	return &types.MsgSendToShardResponse{Id: id}, nil
 }

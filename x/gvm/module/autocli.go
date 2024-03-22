@@ -17,6 +17,17 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Use:       "params",
 					Short:     "Shows the parameters of the module",
 				},
+				{
+					RpcMethod: "ShardBlockAll",
+					Use:       "list-shard-block",
+					Short:     "List all shard-block",
+				},
+				{
+					RpcMethod:      "ShardBlock",
+					Use:            "show-shard-block [id]",
+					Short:          "Shows a shard-block",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "index"}},
+				},
 				// this line is used by ignite scaffolding # autocli/query
 			},
 		},

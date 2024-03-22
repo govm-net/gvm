@@ -19,7 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Query_Params_FullMethodName = "/gvm.gvm.Query/Params"
+	Query_Params_FullMethodName        = "/gvm.gvm.Query/Params"
+	Query_ShardBlock_FullMethodName    = "/gvm.gvm.Query/ShardBlock"
+	Query_ShardBlockAll_FullMethodName = "/gvm.gvm.Query/ShardBlockAll"
 )
 
 // QueryClient is the client API for Query service.
@@ -28,6 +30,9 @@ const (
 type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
+	// Queries a list of ShardBlock items.
+	ShardBlock(ctx context.Context, in *QueryGetShardBlockRequest, opts ...grpc.CallOption) (*QueryGetShardBlockResponse, error)
+	ShardBlockAll(ctx context.Context, in *QueryAllShardBlockRequest, opts ...grpc.CallOption) (*QueryAllShardBlockResponse, error)
 }
 
 type queryClient struct {
@@ -47,12 +52,33 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
+func (c *queryClient) ShardBlock(ctx context.Context, in *QueryGetShardBlockRequest, opts ...grpc.CallOption) (*QueryGetShardBlockResponse, error) {
+	out := new(QueryGetShardBlockResponse)
+	err := c.cc.Invoke(ctx, Query_ShardBlock_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) ShardBlockAll(ctx context.Context, in *QueryAllShardBlockRequest, opts ...grpc.CallOption) (*QueryAllShardBlockResponse, error) {
+	out := new(QueryAllShardBlockResponse)
+	err := c.cc.Invoke(ctx, Query_ShardBlockAll_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
+	// Queries a list of ShardBlock items.
+	ShardBlock(context.Context, *QueryGetShardBlockRequest) (*QueryGetShardBlockResponse, error)
+	ShardBlockAll(context.Context, *QueryAllShardBlockRequest) (*QueryAllShardBlockResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -62,6 +88,12 @@ type UnimplementedQueryServer struct {
 
 func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
+}
+func (UnimplementedQueryServer) ShardBlock(context.Context, *QueryGetShardBlockRequest) (*QueryGetShardBlockResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ShardBlock not implemented")
+}
+func (UnimplementedQueryServer) ShardBlockAll(context.Context, *QueryAllShardBlockRequest) (*QueryAllShardBlockResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ShardBlockAll not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -94,6 +126,42 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_ShardBlock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetShardBlockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).ShardBlock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_ShardBlock_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).ShardBlock(ctx, req.(*QueryGetShardBlockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_ShardBlockAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllShardBlockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).ShardBlockAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_ShardBlockAll_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).ShardBlockAll(ctx, req.(*QueryAllShardBlockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -104,6 +172,14 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
+		},
+		{
+			MethodName: "ShardBlock",
+			Handler:    _Query_ShardBlock_Handler,
+		},
+		{
+			MethodName: "ShardBlockAll",
+			Handler:    _Query_ShardBlockAll_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -323,6 +323,14 @@ func New(
 
 	app.App = appBuilder.Build(db, traceStore, baseAppOptions...)
 
+	voteExtHandler := gvmmodulekeeper.NewVoteExtHandler(logger, app.GvmKeeper, app.StakingKeeper, app.BaseApp.Mempool(), app.BaseApp)
+
+	app.App.BaseApp.SetExtendVoteHandler(voteExtHandler.ExtendVoteHandler())
+	app.App.BaseApp.SetVerifyVoteExtensionHandler(voteExtHandler.VerifyVoteExtensionHandler())
+	app.App.BaseApp.SetPrepareProposal(voteExtHandler.PrepareProposal())
+	app.App.BaseApp.SetProcessProposal(voteExtHandler.ProcessProposal())
+	app.App.BaseApp.SetPreBlocker(voteExtHandler.PreBlocker)
+
 	// Register legacy modules
 	app.registerIBCModules()
 
@@ -351,6 +359,9 @@ func New(
 	// must be set manually as follow. The upgrade module will de-duplicate the module version map.
 	//
 	// app.SetInitChainer(func(ctx sdk.Context, req *abci.RequestInitChain) (*abci.ResponseInitChain, error) {
+	// 	param := app.GetConsensusParams(ctx)
+	// 	param.Abci.VoteExtensionsEnableHeight = 2
+	// 	app.StoreConsensusParams(ctx, param)
 	// 	app.UpgradeKeeper.SetModuleVersionMap(ctx, app.ModuleManager.GetVersionMap())
 	// 	return app.App.InitChainer(ctx, req)
 	// })

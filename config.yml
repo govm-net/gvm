@@ -19,3 +19,24 @@ faucet:
 validators:
 - name: alice
   bonded: 100000000stake
+  app:
+    api:
+      address: :1318
+    grpc:
+      address: :9092
+    grpc-web:
+      address: :9093
+  config:
+    p2p:
+      laddr: :26658
+    rpc:
+      laddr: :26659
+      pprof_laddr: :6061
+  # home: $HOME/.gvm_shard1
+genesis:
+  chain_id: "gvm_shard1"
+  genesis_time: "2024-03-21T12:00:00.000000Z"
+  consensus:
+    params:
+      abci:
+        vote_extensions_enable_height: "1"

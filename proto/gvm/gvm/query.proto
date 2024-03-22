@@ -1,4 +1,5 @@
 syntax = "proto3";
+
 package gvm.gvm;
 
 import "amino/amino.proto";
@@ -6,25 +7,53 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "gvm/gvm/params.proto";
+import "gvm/gvm/shard_block.proto";
 
 option go_package = "github.com/govm-net/gvm/x/gvm/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  
   // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/govm-net/gvm/gvm/params";
+  
+  }
+  
+  // Queries a list of ShardBlock items.
+  rpc ShardBlock    (QueryGetShardBlockRequest) returns (QueryGetShardBlockResponse) {
+    option (google.api.http).get = "/govm-net/gvm/gvm/shard_block/{index}";
+  
+  }
+  rpc ShardBlockAll (QueryAllShardBlockRequest) returns (QueryAllShardBlockResponse) {
+    option (google.api.http).get = "/govm-net/gvm/gvm/shard_block";
+  
   }
 }
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
 // QueryParamsResponse is response type for the Query/Params RPC method.
 message QueryParamsResponse {
+  
   // params holds all the parameters of this module.
-  Params params = 1 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true
-  ];
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
 }
+
+message QueryGetShardBlockRequest {
+  uint64 index = 1;
+}
+
+message QueryGetShardBlockResponse {
+  ShardBlock shardBlock = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllShardBlockRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllShardBlockResponse {
+  repeated ShardBlock                             shardBlock = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
