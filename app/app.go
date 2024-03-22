@@ -78,6 +78,7 @@ import (
 	gvmmodulekeeper "github.com/govm-net/gvm/x/gvm/keeper"
 	shardmodulekeeper "github.com/govm-net/gvm/x/shard/keeper"
 
+	spcmodulekeeper "github.com/govm-net/gvm/x/spc/keeper"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	"github.com/govm-net/gvm/docs"
@@ -144,6 +145,7 @@ type App struct {
 
 	GvmKeeper   gvmmodulekeeper.Keeper
 	ShardKeeper shardmodulekeeper.Keeper
+	SpcKeeper   spcmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -284,6 +286,7 @@ func New(
 		&app.CircuitBreakerKeeper,
 		&app.GvmKeeper,
 		&app.ShardKeeper,
+		&app.SpcKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	); err != nil {
 		panic(err)

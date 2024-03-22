@@ -1,0 +1,17 @@
+syntax = "proto3";
+package gvm.spc;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "gvm/spc/params.proto";
+
+option go_package = "github.com/govm-net/gvm/x/spc/types";
+
+// GenesisState defines the spc module's genesis state.
+message GenesisState {
+  // params defines all the parameters of the module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}

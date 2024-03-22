@@ -55,10 +55,13 @@ import (
 
 	gvmmodulev1 "github.com/govm-net/gvm/api/gvm/gvm/module"
 	shardmodulev1 "github.com/govm-net/gvm/api/gvm/shard/module"
+	spcmodulev1 "github.com/govm-net/gvm/api/gvm/spc/module"
 	_ "github.com/govm-net/gvm/x/gvm/module" // import for side-effects
 	gvmmoduletypes "github.com/govm-net/gvm/x/gvm/types"
 	_ "github.com/govm-net/gvm/x/shard/module" // import for side-effects
 	shardmoduletypes "github.com/govm-net/gvm/x/shard/types"
+	_ "github.com/govm-net/gvm/x/spc/module" // import for side-effects
+	spcmoduletypes "github.com/govm-net/gvm/x/spc/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 )
 
@@ -99,6 +102,7 @@ var (
 		// chain modules
 		gvmmoduletypes.ModuleName,
 		shardmoduletypes.ModuleName,
+		spcmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
 
@@ -125,6 +129,7 @@ var (
 		// chain modules
 		gvmmoduletypes.ModuleName,
 		shardmoduletypes.ModuleName,
+		spcmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	}
 
@@ -145,6 +150,7 @@ var (
 		// chain modules
 		gvmmoduletypes.ModuleName,
 		shardmoduletypes.ModuleName,
+		spcmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	}
 
@@ -166,6 +172,7 @@ var (
 		{Account: ibcfeetypes.ModuleName},
 		{Account: icatypes.ModuleName},
 		{Account: shardmoduletypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner, authtypes.Staking}},
+		{Account: spcmoduletypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner, authtypes.Staking}},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 
@@ -308,6 +315,10 @@ var (
 			{
 				Name:   shardmoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&shardmodulev1.Module{}),
+			},
+			{
+				Name:   spcmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&spcmodulev1.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},
